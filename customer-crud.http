@@ -1,0 +1,140 @@
+### =====================================================
+### CUSTOMER API - REQUÊTES CRUD
+### =====================================================
+### Variables de configuration
+@baseUrl = http://localhost:8080
+@apiPath = /api/customers
+@contentType = application/json
+
+### =====================================================
+### 📌 CRÉATION (CREATE) - POST
+### =====================================================
+
+### POST - Créer un customer avec les données complètes
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jean",
+  "lastName": "Dupont",
+  "email": "jean.dupont@example.com",
+  "phoneNumber": "0123456789",
+  "address": "123 Rue de la Paix",
+  "city": "Paris",
+  "postalCode": "75001",
+  "country": "France"
+}
+
+### POST - Créer un customer minimal (champs obligatoires)
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Marie",
+  "lastName": "Martin",
+  "email": "marie.martin@example.com"
+}
+
+### =====================================================
+### 📖 LECTURE (READ) - GET
+### =====================================================
+
+### GET - Récupérer tous les customers
+GET {{baseUrl}}{{apiPath}}
+Accept: {{contentType}}
+
+###
+### GET - Récupérer un customer par ID
+### Remplacez :id par le numéro de l'ID souhaité
+GET {{baseUrl}}{{apiPath}}/1
+Accept: {{contentType}}
+
+###
+### GET - Récupérer un customer par email
+GET {{baseUrl}}{{apiPath}}/email/jean.dupont@example.com
+Accept: {{contentType}}
+
+###
+### GET - Tentative de récupération d'un ID inexistant (404)
+GET {{baseUrl}}{{apiPath}}/9999
+Accept: {{contentType}}
+
+### =====================================================
+### ✏️  MISE À JOUR (UPDATE) - PUT
+### =====================================================
+
+### PUT - Mettre à jour un customer existant
+PUT {{baseUrl}}{{apiPath}}/1
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jean-Claude",
+  "lastName": "Dupont",
+  "email": "jean-claude.dupont@example.com",
+  "phoneNumber": "0133333333",
+  "address": "123 Rue de la Paix - Apt 4",
+  "city": "Paris",
+  "postalCode": "75002",
+  "country": "France"
+}
+
+###
+### PUT - Mettre à jour seulement le email
+PUT {{baseUrl}}{{apiPath}}/2
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Marie",
+  "lastName": "Martin",
+  "email": "marie.martin.newemail@example.com",
+  "phoneNumber": "0987654321",
+  "address": "456 Avenue des Champs",
+  "city": "Lyon",
+  "postalCode": "69000",
+  "country": "France"
+}
+
+###
+### PUT - Tentative de mise à jour d'un ID inexistant (404)
+PUT {{baseUrl}}{{apiPath}}/9999
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Inexistant",
+  "lastName": "Client",
+  "email": "inexistant@example.com"
+}
+
+### =====================================================
+### 🗑️  SUPPRESSION (DELETE) - DELETE
+### =====================================================
+
+### DELETE - Supprimer un customer
+DELETE {{baseUrl}}{{apiPath}}/1
+
+###
+### DELETE - Tentative de suppression d'un ID inexistant (404)
+DELETE {{baseUrl}}{{apiPath}}/9999
+
+### =====================================================
+### 🧪 SCÉNARIOS DE TEST COMPLETS
+### =====================================================
+
+### SCÉNARIO 1 - Créer et vérifier
+### 1. Exécutez le POST de création
+### 2. Notez l'ID reçu en réponse
+### 3. Exécutez le GET avec cet ID
+
+### SCÉNARIO 2 - Mettre à jour et vérifier
+### 1. Exécutez le PUT sur un ID existant
+### 2. Exécutez le GET pour vérifier les modifications
+
+### SCÉNARIO 3 - Flux complet
+### 1. POST - Créer un customer
+### 2. GET /api/customers - Récupérer tous
+### 3. GET /api/customers/{id} - Récupérer le nouveau
+### 4. PUT - Modifier le customer
+### 5. GET - Vérifier les modifications
+### 6. DELETE - Supprimer le customer
+### 7. GET - Vérifier la suppression (404)
+

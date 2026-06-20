@@ -1,0 +1,127 @@
+### Variables
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+### Créer un premier customer
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jean",
+  "lastName": "Dupont",
+  "email": "jean.dupont@example.com",
+  "phoneNumber": "0123456789",
+  "address": "123 Rue de la Paix",
+  "city": "Paris",
+  "postalCode": "75001",
+  "country": "France"
+}
+
+### Créer un deuxième customer
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Marie",
+  "lastName": "Martin",
+  "email": "marie.martin@example.com",
+  "phoneNumber": "0987654321",
+  "address": "456 Avenue des Champs",
+  "city": "Lyon",
+  "postalCode": "69000",
+  "country": "France"
+}
+
+### Créer un troisième customer
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Pierre",
+  "lastName": "Bernard",
+  "email": "pierre.bernard@example.com",
+  "phoneNumber": "0612345678",
+  "address": "789 Boulevard Saint-Germain",
+  "city": "Bordeaux",
+  "postalCode": "33000",
+  "country": "France"
+}
+
+### Récupérer tous les customers
+GET {{baseUrl}}/api/customers
+Accept: {{contentType}}
+
+### Récupérer un customer par ID (ID=1)
+GET {{baseUrl}}/api/customers/1
+Accept: {{contentType}}
+
+### Récupérer un customer par ID (ID=2)
+GET {{baseUrl}}/api/customers/2
+Accept: {{contentType}}
+
+### Récupérer un customer par email
+GET {{baseUrl}}/api/customers/email/jean.dupont@example.com
+Accept: {{contentType}}
+
+### Récupérer un customer par email - Marie
+GET {{baseUrl}}/api/customers/email/marie.martin@example.com
+Accept: {{contentType}}
+
+### Récupérer un customer qui n'existe pas (erreur 404)
+GET {{baseUrl}}/api/customers/999
+Accept: {{contentType}}
+
+### Mettre à jour un customer (ID=1)
+PUT {{baseUrl}}/api/customers/1
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jean-Claude",
+  "lastName": "Dupont",
+  "email": "jean-claude.dupont@example.com",
+  "phoneNumber": "0133333333",
+  "address": "123 Rue de la Paix Apt 4",
+  "city": "Paris",
+  "postalCode": "75002",
+  "country": "France"
+}
+
+### Mettre à jour un customer (ID=2)
+PUT {{baseUrl}}/api/customers/2
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Marie-Sophie",
+  "lastName": "Martin",
+  "email": "marie-sophie.martin@example.com",
+  "phoneNumber": "0987654322",
+  "address": "456 Avenue des Champs Etage 2",
+  "city": "Lyon",
+  "postalCode": "69001",
+  "country": "France"
+}
+
+### Mettre à jour un customer qui n'existe pas (erreur 404)
+PUT {{baseUrl}}/api/customers/999
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Inexistant",
+  "lastName": "Client",
+  "email": "inexistant@example.com"
+}
+
+### Supprimer un customer (ID=3)
+DELETE {{baseUrl}}/api/customers/3
+
+### Vérifier que le customer a bien été supprimé (erreur 404)
+GET {{baseUrl}}/api/customers/3
+Accept: {{contentType}}
+
+### Supprimer un customer qui n'existe pas (erreur 404)
+DELETE {{baseUrl}}/api/customers/999
+
+### Récupérer tous les customers (après modifications)
+GET {{baseUrl}}/api/customers
+Accept: {{contentType}}
+

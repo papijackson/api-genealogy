@@ -1,0 +1,213 @@
+### =====================================================
+### CUSTOMER API - TESTS AVANCÉS ET CAS LIMITES
+### =====================================================
+### Variables
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+### =====================================================
+### 🧪 TESTS DE VALIDATION
+### =====================================================
+
+### TEST - Email déjà existant (doublon - erreur probable)
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Duplicate",
+  "lastName": "Email",
+  "email": "jean.dupont@example.com"
+}
+
+### TEST - Champ firstName vide
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "",
+  "lastName": "Test",
+  "email": "test.empty@example.com"
+}
+
+### TEST - Champ lastName vide
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Test",
+  "lastName": "",
+  "email": "test.lastname@example.com"
+}
+
+### TEST - Email invalide (sans @)
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Test",
+  "lastName": "Invalid",
+  "email": "test.invalid.email"
+}
+
+### =====================================================
+### 📊 TESTS AVEC DONNÉES COMPLEXES
+### =====================================================
+
+### TEST - Customer avec caractères spéciaux
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "François",
+  "lastName": "D'Orléans",
+  "email": "francois.dorleans@example.com",
+  "phoneNumber": "+33 1 23 45 67 89",
+  "address": "123 Rue de l'École",
+  "city": "Île-de-France",
+  "postalCode": "75000",
+  "country": "France"
+}
+
+### TEST - Customer avec données très longues
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Alexandre",
+  "lastName": "Van Der Something Very Long Name",
+  "email": "very.long.email.address.that.is.quite.extended@very-long-domain-name.example.com",
+  "phoneNumber": "0123456789012345",
+  "address": "Very Long Street Address Number 123 Building A Apartment 4567",
+  "city": "VeryLongCityNameThatIsMostlyForTesting",
+  "postalCode": "123456",
+  "country": "Very Long Country Name"
+}
+
+### TEST - Customer international
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "José",
+  "lastName": "García",
+  "email": "jose.garcia@example.es",
+  "phoneNumber": "+34 912 345 678",
+  "address": "Calle Mayor 123",
+  "city": "Madrid",
+  "postalCode": "28001",
+  "country": "España"
+}
+
+### =====================================================
+### 🔍 TESTS DE RECHERCHE
+### =====================================================
+
+### GET - Vérifier tous les customers créés
+GET {{baseUrl}}/api/customers
+Accept: {{contentType}}
+
+###
+### GET - Chercher par différents emails
+GET {{baseUrl}}/api/customers/email/francois.dorleans@example.com
+Accept: {{contentType}}
+
+###
+### GET - Email non trouvé
+GET {{baseUrl}}/api/customers/email/nonexistent@example.com
+Accept: {{contentType}}
+
+### =====================================================
+### ⚡ TESTS DE PERFORMANCE
+### =====================================================
+
+### TEST - Créer plusieurs customers rapidement
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Performance",
+  "lastName": "Test1",
+  "email": "perf.test1@example.com"
+}
+
+###
+### TEST - Créer plusieurs customers rapidement
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Performance",
+  "lastName": "Test2",
+  "email": "perf.test2@example.com"
+}
+
+###
+### TEST - Créer plusieurs customers rapidement
+POST {{baseUrl}}/api/customers
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Performance",
+  "lastName": "Test3",
+  "email": "perf.test3@example.com"
+}
+
+### =====================================================
+### 🔄 TESTS DE MISE À JOUR PARTIELLE
+### =====================================================
+
+### TEST - Mettre à jour juste le phone number
+PUT {{baseUrl}}/api/customers/1
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jean",
+  "lastName": "Dupont",
+  "email": "jean.dupont@example.com",
+  "phoneNumber": "0666666666",
+  "address": "123 Rue de la Paix",
+  "city": "Paris",
+  "postalCode": "75001",
+  "country": "France"
+}
+
+###
+### TEST - Mettre à jour juste la ville
+PUT {{baseUrl}}/api/customers/1
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Jean",
+  "lastName": "Dupont",
+  "email": "jean.dupont@example.com",
+  "phoneNumber": "0123456789",
+  "address": "123 Rue de la Paix",
+  "city": "Marseille",
+  "postalCode": "75001",
+  "country": "France"
+}
+
+### =====================================================
+### 📋 AFFICHAGE DU RÉSUMÉ DES TESTS
+### =====================================================
+
+### AVANT D'EXÉCUTER LES TESTS :
+### 1. Assurez-vous que l'application est en cours d'exécution
+### 2. Vérifiez que la base de données est vide (ou accepte les doublons d'email)
+### 3. Consultez les résultats dans le panneau de réponse
+
+### CAS DE TEST PRIORITAIRES :
+### ✓ Créer un customer avec données complètes
+### ✓ Récupérer tous les customers
+### ✓ Récupérer un customer par ID
+### ✓ Récupérer un customer par email
+### ✓ Mettre à jour un customer
+### ✓ Supprimer un customer
+### ✓ Vérifier les erreurs 404
+
+### OBSERVEZ :
+### - Les codes HTTP retournés (200, 201, 204, 404, etc.)
+### - Les formats de réponse
+### - Les validations d'email (unique)
+### - Les longueurs max des champs
+
