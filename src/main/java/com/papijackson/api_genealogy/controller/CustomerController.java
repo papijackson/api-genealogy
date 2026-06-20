@@ -17,6 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerController {
 
+    /**
+     * Service pour la gestion des customers
+     */
     private final CustomerService customerService;
 
     /**
